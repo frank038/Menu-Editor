@@ -3,7 +3,7 @@ by frank038
 
 v. 0.0.1
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY. Anyone can use and modified it for any purpose. Just remember the author.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY. Anyone can use and modified it for any purpose. Just remember the author (in case of modification).
 
 A simple menu editor for Linux written in Python3/tkinter.
 
