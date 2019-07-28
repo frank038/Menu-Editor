@@ -7,9 +7,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY. Anyone can use and modified 
 
 A simple menu editor for Linux written in Python3/tkinter.
 
-Requirements: python3, python3-xdg
+Requirements: python3, python3-xdg.
 
 This program try to follow the freedesktop directives about the desktop file as possible.
+It will never manage submenu items.
 To date this program can only list the applications it found in the system default directory and in the user default directory.
 
 ![My image](https://github.com/frank038/Menu-Editor/blob/master/img.png)
