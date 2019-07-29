@@ -1,7 +1,7 @@
 # Menu-Editor
 by frank038
 
-v. 0.0.1
+v. 0.5
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY. Anyone can use and modified it for any purpose. Just remember the author (in case of modification).
 
@@ -11,6 +11,10 @@ Requirements: python3, python3-xdg.
 
 This program try to follow the freedesktop directives about the desktop file as possible.
 It will never manage submenu items.
-To date this program can only list the applications it found in the system default directory and in the user default directory.
+To date this program can list the applications it found in the system default directory and in the user default directory, delete them (only the user files), modify them (always saved in the user folder) and create new ones (in the user folder).
 
-![My image](https://github.com/frank038/Menu-Editor/blob/master/img.png)
+Limitations: a few categories has been merged into other main categories (e.g. Audio and Video are simply links to AudioVideo category); the icons in the main program are taken from Hicolor icon theme, so it cannot match the real icon the user can see in its menu (tkinter cannot handle svg files; the xdg python module has some limitations).
+
+![My image](https://github.com/frank038/Menu-Editor/blob/master/img1.png)
+
+![My image](https://github.com/frank038/Menu-Editor/blob/master/img2.png)
