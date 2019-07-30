@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.6
+ V. 0.7
 """
 import tkinter as tk
 import tkinter.ttk as ttk
