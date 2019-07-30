@@ -142,10 +142,22 @@ class Application(ttk.Frame):
         self.lcr_comment_lbl = ttk.Label(self, text="Comment (optional)").grid(column=0, row=23, sticky="sw")
         self.comment_var = tk.StringVar()
         self.lcr_comment_ent = ttk.Entry(self, textvariable=self.comment_var, width=50).grid(column=0, row=24, sticky="w")
+        ### frame
+        self.terminal_frame = ttk.Frame(self)
+        self.terminal_frame.grid(column=0, row=25, columnspan=2, sticky="sw")
         # run in terminal
         self.terminal_var = tk.IntVar()
-        self.lcr_terminal_chk = ttk.Checkbutton(self, text="\n    Run in terminal    \n", variable=self.terminal_var, offvalue=0, onvalue=1).grid(column=0, row=25, sticky="sw")
+        self.lcr_terminal_chk = ttk.Checkbutton(self.terminal_frame, text="\n    Run in terminal    \n", variable=self.terminal_var, offvalue=0, onvalue=1).grid(column=0, row=0, sticky="sw")
         self.terminal_var.set(0)
+        # no display
+        self.nodisplay_var = tk.IntVar()
+        self.lcr_nodisplay_chk = ttk.Checkbutton(self.terminal_frame, text="\n    No Display    \n", variable=self.nodisplay_var, offvalue=0, onvalue=1).grid(column=1, row=0, sticky="sw")
+        self.nodisplay_var.set(0)
+        # hidden
+        self.hidden_var = tk.IntVar()
+        self.lcr_hidden_chk = ttk.Checkbutton(self.terminal_frame, text="\n    Hidden    \n", variable=self.hidden_var, offvalue=0, onvalue=1).grid(column=2, row=0, sticky="sw")
+        self.hidden_var.set(0)
+        ####
         # save button
         self.save_button = ttk.Button(self, text="Save", command=self.fsave).grid(column=0, row=26, sticky="w")
         # quit button
@@ -204,6 +216,12 @@ class Application(ttk.Frame):
         # run in terminal
         dterminal = de.getTerminal()
         self.terminal_var.set(dterminal)
+        # no display
+        dnodisplay = de.getNoDisplay()
+        self.nodisplay_var.set(dnodisplay)
+        # hidden
+        dhidden = de.Hidden()
+        self.hidden_var.set(dhidden)
     
     # save the file
     def fsave(self):
@@ -249,6 +267,18 @@ class Application(ttk.Frame):
             dterminal = "false"
         else:
             dterminal = "true"
+        # no display
+        dnodisplay_temp = self.nodisplay_var.get()
+        if dnodisplay_temp == 0:
+            dnodisplay = "false"
+        else:
+            dnodisplay = "true"
+        # hidden
+        dhidden_temp = self.terminal_var.get()
+        if dhidden_temp == 0:
+            dhidden = "false"
+        else:
+            dhidden = "true"
         ######### creating and saving the desktop file
         pfilename = ""
         # new desktop file
@@ -281,6 +311,8 @@ class Application(ttk.Frame):
         de.set("Icon", dicon)
         de.set("Comment", dcomment)
         de.set("Terminal", dterminal)
+        de.set("NoDisplay", dnodisplay)
+        de.set("Hidden", dhidden)
         #
         # to user defaul directory
         try:
