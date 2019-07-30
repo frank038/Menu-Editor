@@ -1,13 +1,15 @@
 # Menu-Editor
 by frank038
 
-v. 0.6
+v. 0.7
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY. Anyone can use and modified it for any purpose. Just remember the author (in case of modification).
 
 A simple menu editor for Linux written in Python3/tkinter.
 
 Requirements: python3, python3-xdg.
+
+This program uses customs file and directory dialogs instead of the default tkinter dialogs. They are a slightly modified version of the project by Juliette Monsel (j_4321).
 
 This program try to follow the freedesktop directives about the desktop file as possible.
 It will never manage submenu items.
