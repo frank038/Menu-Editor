@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.5
+ V. 0.6
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -220,7 +220,7 @@ class Application(ttk.Frame):
         dnodisplay = de.getNoDisplay()
         self.nodisplay_var.set(dnodisplay)
         # hidden
-        dhidden = de.Hidden()
+        dhidden = de.getHidden()
         self.hidden_var.set(dhidden)
     
     # save the file
