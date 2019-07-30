@@ -12,7 +12,8 @@ import sys
 import shutil
 from xdg import DesktopEntry
 from xdg import IconTheme
-from tkinter.filedialog import askopenfilename, askdirectory
+#from tkinter.filedialog import askopenfilename, askdirectory
+from tkfilebrowser import askopendirname, askopenfilename
 from tkinter import messagebox
 
 # if a filename is passed to the program
@@ -328,7 +329,11 @@ class Application(ttk.Frame):
     
     # get and set the executable chosen
     def fgetExec(self):
-        filename = askopenfilename()
+        filename = askopenfilename(parent=self.master, 
+                           initialdir='/', 
+                           initialfile='tmp',
+                           filetypes=[("All files", "*")],
+                           font_size=font_size)
         # if it is in path or not
         if shutil.which(os.path.basename(filename)):
             self.exec_ent_var.set(os.path.basename(filename))
@@ -337,7 +342,11 @@ class Application(ttk.Frame):
     
     # get and set the executable chosen
     def fgetTryExec(self):
-        filename = askopenfilename()
+        filename = askopenfilename(parent=self.master, 
+                           initialdir='/', 
+                           initialfile='tmp',
+                           filetypes=[("All files", "*")],
+                           font_size=font_size)
         # if it is in path or not
         if shutil.which(os.path.basename(filename)):
             self.tryexec_ent_var.set(os.path.basename(filename))
@@ -346,12 +355,18 @@ class Application(ttk.Frame):
     
     # get the path
     def fgetDir(self):
-        dirname = askdirectory()
+        dirname = askopendirname(parent=self.master, 
+                         initialdir='/', 
+                         initialfile='tmp', font_size=font_size)
         self.dir_ent_var.set(dirname)
     
     # get the icon
     def fgetIcon(self):
-        filename = askopenfilename()
+        filename = askopenfilename(parent=self.master, 
+                           initialdir='/', 
+                           initialfile='tmp',
+                           filetypes=[("All files", "*")],
+                           font_size=font_size)
         self.icon_var.set(filename)
         
 ###########
