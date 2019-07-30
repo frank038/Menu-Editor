@@ -137,6 +137,7 @@ class Application(ttk.Frame):
         self.lcr_icon_lbl = ttk.Label(self, text="Icon").grid(column=0, row=21, sticky="sw")
         self.icon_var = tk.StringVar()
         self.lcr_icon_ent = ttk.Entry(self, textvariable=self.icon_var, width=50).grid(column=0, row=22, sticky="w")
+        self.lcr_btn_icon = ttk.Button(self, text="Choose", command=self.fgetIcon).grid(column=1, row=22, sticky="w")
         # comment
         self.lcr_comment_lbl = ttk.Label(self, text="Comment (optional)").grid(column=0, row=23, sticky="sw")
         self.comment_var = tk.StringVar()
@@ -295,7 +296,7 @@ class Application(ttk.Frame):
     
     # get and set the executable chosen
     def fgetExec(self):
-        filename = askopenfilename()#initialdir=
+        filename = askopenfilename()
         # if it is in path or not
         if shutil.which(os.path.basename(filename)):
             self.exec_ent_var.set(os.path.basename(filename))
@@ -304,7 +305,7 @@ class Application(ttk.Frame):
     
     # get and set the executable chosen
     def fgetTryExec(self):
-        filename = askopenfilename()#initialdir=
+        filename = askopenfilename()
         # if it is in path or not
         if shutil.which(os.path.basename(filename)):
             self.tryexec_ent_var.set(os.path.basename(filename))
@@ -315,6 +316,11 @@ class Application(ttk.Frame):
     def fgetDir(self):
         dirname = askdirectory()
         self.dir_ent_var.set(dirname)
+    
+    # get the icon
+    def fgetIcon(self):
+        filename = askopenfilename()
+        self.icon_var.set(filename)
         
 ###########
 def main():
