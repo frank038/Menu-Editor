@@ -275,7 +275,7 @@ class Application(ttk.Frame):
         else:
             dnodisplay = "true"
         # hidden
-        dhidden_temp = self.terminal_var.get()
+        dhidden_temp = self.hidden_var.get()
         if dhidden_temp == 0:
             dhidden = "false"
         else:
