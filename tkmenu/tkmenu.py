@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.6
+ V. 0.7.1
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -166,6 +166,9 @@ class Application(ttk.Frame):
         self.vscrollbar.pack(fill="y", expand=True)
         #
         ### infos
+        # combobox font size
+        bigfont = font.Font(family="",size=font_size)
+        self.master.option_add("*TCombobox*Font", bigfont)
         # bold style for labels
         bold_style = ttk.Style ()
         bold_style.configure("Bold.TLabel", font=("", font_size, "bold"))
@@ -173,9 +176,6 @@ class Application(ttk.Frame):
         italic_style = ttk.Style()
         italic_style.configure("Italic.TLabel", font=("", font_size, "italic"))
         #
-        # combobox font size
-        bigfont = font.Font(family="",size=font_size)
-        self.master.option_add("*Font", bigfont)
         ## frame
         self.d_frame = ttk.Frame(self)
         self.d_frame.grid(column=1, row=4, rowspan=20)
@@ -337,6 +337,8 @@ class Application(ttk.Frame):
     
     #### FILL TREEVIEW 
     def fpop_treeview(self):
+        list_one = []
+        list_two = []
         #
         for item in  self.info_desktop:
             #
@@ -348,7 +350,8 @@ class Application(ttk.Frame):
                 # the id of the category
                 idx_cat = self.id_list.index(ret)
                 idx = self.id_list[idx_cat-1]
-                self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+                #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+                list_one.append([item.name, item.path, idx, item.name.lower()])
             else:
                 # main category - second pass
                 ret = self.item_in_main2(item)
@@ -357,7 +360,8 @@ class Application(ttk.Frame):
                     # the id of the category
                     idx_cat = self.id_list.index(ret)
                     idx = self.id_list[idx_cat-1]
-                    self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+                    #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+                    list_one.append([item.name, item.path, idx, item.name.lower()])
                 else:
                     # indirect main category
                     ret = self.item_in_ext(item)
@@ -366,12 +370,24 @@ class Application(ttk.Frame):
                         # the id of the category
                         idx_cat = self.id_list.index(ret)
                         idx = self.id_list[idx_cat-1]
-                        self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+                        #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+                        list_one.append([item.name, item.path, idx, item.name.lower()])
                     else:
                         # Missed categoty
                         idx_cat = self.id_list.index("Missed")
                         idx = self.id_list[idx_cat-1]
-                        self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+                        list_two.append([item.name, item.path, idx, item.name.lower()])
+                        #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+        ## sort the lists and fill the treeview
+        list_one2 = sorted(list_one, key=lambda list_one: list_one[3], reverse=True)
+
+        for ii in list_one2:
+            self.tv.insert(ii[2], 0, text=ii[0], tags=(ii[1],"E"))
+        #
+        list_two.sort(reverse=True)
+        list_two2 = sorted(list_two, key=lambda list_two: list_two[3], reverse=True)
+        for ii in list_two2:
+            self.tv.insert(ii[2], 0, text=ii[0], tags=(ii[1],"E"))
     
     # from user to system and viceversa
     def fswitch(self):
