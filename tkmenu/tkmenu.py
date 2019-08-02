@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.7.1
+ V. 0.7.5
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -15,10 +15,13 @@ from xdg import IconTheme
 from tkinter import messagebox
 
 # font size
-font_size = 20
+font_size = 14
+
+# label wrap length
+wl = 350
 
 # window width and height
-app_width = 1200
+app_width = 600
 app_height = 900
 
 app_dirs_user = [os.environ.get("XDG_DATA_HOME")+"/applications"]
@@ -109,6 +112,8 @@ class Application(ttk.Frame):
         
         self.pack(fill="both", expand=True)
         self.master.update_idletasks()
+
+        self.columnconfigure(1, weight=1) 
         
         # treeview: row height
         ffont = font.Font(family='', size=font_size)
@@ -132,27 +137,34 @@ class Application(ttk.Frame):
         ############### the gui
         #### buttons
         self.frame_btn = ttk.Frame(self, width=app_width)
-        self.frame_btn.grid(column=0, row=0, columnspan=5)
+        self.frame_btn.grid(column=0, row=0, columnspan=5, sticky="nwse")
+        
+        for i in range(5):
+            self.frame_btn.columnconfigure(i, weight=1)
+        
         # user/system switch
         self.btn1 = ttk.Button(self.frame_btn, text="User/System", command=self.fswitch)
-        self.btn1.grid(column=0, row=0, sticky="nw")
+        self.btn1.grid(column=0, row=0, sticky="we")
         # delete
         self.btn2 = ttk.Button(self.frame_btn, text="Delete", command=self.fdelete)
-        self.btn2.grid(column=2, row=0, sticky="nw")
+        self.btn2.grid(column=1, row=0, sticky="we")
         # modify
         self.btn4 = ttk.Button(self.frame_btn, text="Modify", command=self.fmodify)
-        self.btn4.grid(column=3, row=0, sticky="nw")
+        self.btn4.grid(column=2, row=0, sticky="we")
         # new
-        self.btn3 = ttk.Button(self.frame_btn, text="New", command=lambda:os.popen("python3 tkmenu_launcher.py 0 ''"))
-        self.btn3.grid(column=4, row=0, sticky="nw")
+        self.btn3 = ttk.Button(self.frame_btn, text="New", command=lambda:os.popen("python3 tkmenu_launcher.py 0 '' {}".format(font_size)))
+        self.btn3.grid(column=3, row=0, sticky="we")
         # quit button
         quit_btn = ttk.Button(self.frame_btn, text="Exit", command=quit)
-        quit_btn.grid(column=9, row=0, sticky="ne")
+        quit_btn.grid(column=4, row=0, sticky="we")
+        
+        
+        
         # frame for treeview e scrollbar
         self.tv_frame = ttk.Frame(self)
-        self.tv_frame.grid(column=0, row=4, rowspan=20)
-        self.tv = ttk.Treeview(self.tv_frame, selectmode="browse", height=25)
-        self.tv.pack(side="left", fill="y", expand=True)
+        self.tv_frame.grid(column=0, row=4, rowspan=20, sticky="nw")
+        self.tv = ttk.Treeview(self.tv_frame, selectmode="browse", height=20)
+        self.tv.pack(side="left", fill="y", expand=True, anchor="nw")
         # column width
         self.tv.column("#0", width=350)
         # column heading
@@ -163,7 +175,7 @@ class Application(ttk.Frame):
         # scrollbar 
         self.vscrollbar = ttk.Scrollbar(self.tv_frame, orient="vertical", command=self.tv.yview)
         self.tv.configure(yscrollcommand=self.vscrollbar.set)
-        self.vscrollbar.pack(fill="y", expand=True)
+        self.vscrollbar.pack(fill="y", expand=True, anchor="nw")
         #
         ### infos
         # combobox font size
@@ -178,20 +190,23 @@ class Application(ttk.Frame):
         #
         ## frame
         self.d_frame = ttk.Frame(self)
-        self.d_frame.grid(column=1, row=4, rowspan=20)
-        # image - solo png in hicolor theme
+        self.d_frame.grid(column=1, row=4, columnspan=4, rowspan=20, padx=20, pady=20, sticky="nw")
+        # image 
         self.iimage = tk.PhotoImage(file="ag.png")
         self.image_lbl = ttk.Label(self.d_frame, text="", image=self.iimage)
         self.image_lbl.grid(column=0, row=4, rowspan=3)
+        # frame
+        self.lbls_frame = ttk.Frame(self.d_frame)
+        self.lbls_frame.grid(column=1, row=4, rowspan=3, sticky="w")
         # name
-        self.pname_lbl = ttk.Label(self.d_frame, text="", style="Bold.TLabel")
-        self.pname_lbl.grid(column=1, row=4, sticky="w")
+        self.pname_lbl = ttk.Label(self.lbls_frame, text="", style="Bold.TLabel")
+        self.pname_lbl.grid(column=0, row=0, sticky="nw")
         # generic name
-        self.generic_name_lbl = ttk.Label(self.d_frame, text="", style="Italic.TLabel")
-        self.generic_name_lbl.grid(column=1,row=5, sticky="w")
+        self.generic_name_lbl = ttk.Label(self.lbls_frame, text="", style="Italic.TLabel")
+        self.generic_name_lbl.grid(column=0,row=1, sticky="nw")
         # comment
-        self.comment_lbl = ttk.Label(self.d_frame, text="")
-        self.comment_lbl.grid(column=1,row=6, sticky="w")
+        self.comment_lbl = ttk.Label(self.lbls_frame, text="", wraplength=wl)
+        self.comment_lbl.grid(column=0,row=2, sticky="nw")
         ############# APPLICATION DETAILS
         # Applications Details line
         self.blank_lbl = ttk.Label(self.d_frame, text="\nApplication Details", style="Bold.TLabel")
@@ -199,25 +214,25 @@ class Application(ttk.Frame):
         #
         # exec
         self.exec_lbl = ttk.Label(self.d_frame, text="  Command: ")
-        self.exec_lbl.grid(column=0, row=8, sticky="w")
+        self.exec_lbl.grid(column=0, row=8, sticky="nw")
         #
-        self.exec_lbl2 = ttk.Label(self.d_frame, text="")
+        self.exec_lbl2 = ttk.Label(self.d_frame, text="", wraplength=wl)
         self.exec_lbl2.grid(column=1, row=8, sticky="w")
         # try exec
         self.tryexec_lbl = ttk.Label(self.d_frame, text="  TryExec: ")
-        self.tryexec_lbl.grid(column=0, row=9, sticky="w")
+        self.tryexec_lbl.grid(column=0, row=9, sticky="nw")
         #
-        self.tryexec_lbl2 = ttk.Label(self.d_frame, text="")
+        self.tryexec_lbl2 = ttk.Label(self.d_frame, text="", wraplength=wl)
         self.tryexec_lbl2.grid(column=1, row=9, sticky="w")
         # categories
         self.categories_lbl = ttk.Label(self.d_frame, text="  Categories: ")
-        self.categories_lbl.grid(column=0, row=10, sticky="w")
+        self.categories_lbl.grid(column=0, row=10, sticky="nw")
         #
         self.categories_cb2 = ttk.Combobox(self.d_frame)
         self.categories_cb2.grid(column=1, row=10, sticky="w")
         # mimetypes
         self.mime_lbl = ttk.Label(self.d_frame, text="  Mime Types: ")
-        self.mime_lbl.grid(column=0, row=11, sticky="w")
+        self.mime_lbl.grid(column=0, row=11, sticky="nw")
         #
         self.mime_lbl2 = ttk.Label(self.d_frame, text="", width=30, wraplength=300)
         #
@@ -225,21 +240,21 @@ class Application(ttk.Frame):
         self.mime_cb2.grid(column=1, row=11, sticky="w")
         # keywords
         self.keywords_lbl = ttk.Label(self.d_frame, text="  Keywords:")
-        self.keywords_lbl.grid(column=0, row=12, sticky="w")
+        self.keywords_lbl.grid(column=0, row=12, sticky="nw")
         #
         self.keywords_cb2 = ttk.Combobox(self.d_frame)
         self.keywords_cb2.grid(column=1, row=12, sticky="w")
         # URL
         self.url_lbl = ttk.Label(self.d_frame, text="  Url: ")
-        self.url_lbl.grid(column=0, row=13, sticky="w")
+        self.url_lbl.grid(column=0, row=13, sticky="nw")
         #
-        self.url_lbl2 = ttk.Label(self.d_frame, text="")
+        self.url_lbl2 = ttk.Label(self.d_frame, text="", wraplength=wl)
         self.url_lbl2.grid(column=1, row=13, sticky="w")
         # path
         self.path_lbl = ttk.Label(self.d_frame, text="  Path: ")
-        self.path_lbl.grid(column=0, row=14, sticky="w")
+        self.path_lbl.grid(column=0, row=14, sticky="nw")
         #
-        self.path_lbl2 = ttk.Label(self.d_frame, text="")
+        self.path_lbl2 = ttk.Label(self.d_frame, text="", wraplength=wl)
         self.path_lbl2.grid(column=1, row=14, sticky="w")
         ###### OPTIONS
         # options
@@ -289,7 +304,7 @@ class Application(ttk.Frame):
             item_path = self.tv.item(selected_item, "tags")[0]
             # launch the editor
             try:
-                os.popen("python3 tkmenu_launcher.py {} {}".format(1, item_path))
+                os.popen("python3 tkmenu_launcher.py {} {} {}".format(1, item_path, font_size))
             except Exception as E:
                 messagebox.showerror("No", "Error: \n"+str(E))
     
@@ -341,6 +356,7 @@ class Application(ttk.Frame):
         list_two = []
         #
         for item in  self.info_desktop:
+            #print("item::", item.name)
             #
             ret = 0
             # main category - first pass
@@ -350,7 +366,6 @@ class Application(ttk.Frame):
                 # the id of the category
                 idx_cat = self.id_list.index(ret)
                 idx = self.id_list[idx_cat-1]
-                #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
                 list_one.append([item.name, item.path, idx, item.name.lower()])
             else:
                 # main category - second pass
@@ -360,7 +375,6 @@ class Application(ttk.Frame):
                     # the id of the category
                     idx_cat = self.id_list.index(ret)
                     idx = self.id_list[idx_cat-1]
-                    #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
                     list_one.append([item.name, item.path, idx, item.name.lower()])
                 else:
                     # indirect main category
@@ -370,14 +384,13 @@ class Application(ttk.Frame):
                         # the id of the category
                         idx_cat = self.id_list.index(ret)
                         idx = self.id_list[idx_cat-1]
-                        #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
                         list_one.append([item.name, item.path, idx, item.name.lower()])
                     else:
                         # Missed categoty
                         idx_cat = self.id_list.index("Missed")
                         idx = self.id_list[idx_cat-1]
                         list_two.append([item.name, item.path, idx, item.name.lower()])
-                        #self.tv.insert(idx, 0, text=item.name, tags=(item.path,"E"))
+
         ## sort the lists and fill the treeview
         list_one2 = sorted(list_one, key=lambda list_one: list_one[3], reverse=True)
 
@@ -388,7 +401,7 @@ class Application(ttk.Frame):
         list_two2 = sorted(list_two, key=lambda list_two: list_two[3], reverse=True)
         for ii in list_two2:
             self.tv.insert(ii[2], 0, text=ii[0], tags=(ii[1],"E"))
-    
+        
     # from user to system and viceversa
     def fswitch(self):
         #
@@ -459,9 +472,9 @@ class Application(ttk.Frame):
         try:
             if item.categories[0] in freedesktop_main_categories:
                 return item.categories[0]
+            else:
+                return 0
         except:
-            return 0
-        else:
             return 0
     
     # main category - second pass
@@ -578,10 +591,6 @@ def main():
     root = tk.Tk()
     root.title("Menu editor")
     root.update_idletasks()
-    
-    width = app_width
-    height = app_height
-    root.geometry('{}x{}'.format(width, height))
     
     # style
     s = ttk.Style()
