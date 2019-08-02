@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.7
+ V. 0.7.5
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -12,19 +12,14 @@ import sys
 import shutil
 from xdg import DesktopEntry
 from xdg import IconTheme
-#from tkinter.filedialog import askopenfilename, askdirectory
+
 from tkfilebrowser import askopendirname, askopenfilename
 from tkinter import messagebox
 
-# if a filename is passed to the program
-dfilename = ""
-if len(sys.argv) > 1:
-    # 0 new - 1 modify
-    ccode = sys.argv[1]
-    dfilename = sys.argv[2]
+ccode = sys.argv[1]
+dfilename = sys.argv[2]
+font_size = sys.argv[3]
 
-# font size
-font_size = 20
 
 # window width and height
 app_width = 1200
@@ -226,6 +221,7 @@ class Application(ttk.Frame):
     
     # save the file
     def fsave(self):
+        print("fsave")
         # getting all the stuff
         # name
         dname = self.name_ent_var.get()
@@ -288,6 +284,7 @@ class Application(ttk.Frame):
             d = MyDialog(self.master)
             self.master.wait_window(d.top)
             if d.filename == "-1":
+                #print("ESCO")
                 return
             else:
                 pfilename = d.filename+".desktop"
@@ -374,10 +371,6 @@ def main():
     root = tk.Tk()
     root.title("Editor")
     root.update_idletasks()
-    
-    width = app_width
-    height = app_height
-    root.geometry('{}x{}'.format(width, height))
     
     # style
     s = ttk.Style()
