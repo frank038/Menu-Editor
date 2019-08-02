@@ -97,7 +97,7 @@ def get_size(file):
             unit, div = SIZES[m]
         else:
             unit, div = SIZES[-1]
-        size = "%s %s" % (locale.format("%.1f", size_o / div), unit)
+        size = "%s %s" % (locale.format_string("%.1f", size_o / div), unit)
     else:
         size = "0 " + _("B")
     return size
