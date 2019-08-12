@@ -27,7 +27,7 @@ app_height = 900
 if os.environ.get("XDG_DATA_HOME") != None:
     app_dirs_user = [os.environ.get("XDG_DATA_HOME")+"/applications"]
 else:
-    app_dirs_user = [os.getenv("HOME")+"/applications"]
+    app_dirs_user = [os.getenv("HOME")+"/.local/share/applications"]
 app_dirs_system = ["/usr/share/applications"]
 
 #######################
