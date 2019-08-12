@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.7.5
+ V. 0.7.6
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -24,7 +24,10 @@ wl = 350
 app_width = 600
 app_height = 900
 
-app_dirs_user = [os.environ.get("XDG_DATA_HOME")+"/applications"]
+if os.environ.get("XDG_DATA_HOME") != None:
+    app_dirs_user = [os.environ.get("XDG_DATA_HOME")+"/applications"]
+else:
+    app_dirs_user = [os.getenv("HOME")+"/applications"]
 app_dirs_system = ["/usr/share/applications"]
 
 #######################
