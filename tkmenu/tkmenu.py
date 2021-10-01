@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.7.6
+ V. 0.7.7
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -15,7 +15,7 @@ from xdg import IconTheme
 from tkinter import messagebox
 
 # font size
-font_size = 14
+font_size = 11
 
 # label wrap length
 wl = 350

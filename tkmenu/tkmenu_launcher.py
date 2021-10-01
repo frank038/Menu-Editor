@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.7.6
+ V. 0.7.7
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -339,6 +339,12 @@ class Application(ttk.Frame):
             self.exec_ent_var.set(os.path.basename(filename))
         else:
             self.exec_ent_var.set(filename)
+            self.dir_ent_var.set(os.path.dirname(filename))
+        # #
+        # self.exec_ent_var.set(os.path.basename(filename))
+        # if os.path.dirname(filename):
+            # if os.path.dirname(filename) not in os.getenv("PATH").split(":"):
+                # self.dir_ent_var.set(os.path.dirname(filename))
     
     # get and set the executable chosen
     def fgetTryExec(self):
