@@ -15,7 +15,7 @@ This program try to follow the freedesktop directives about the desktop file as 
 It will never manage submenu items.
 To date this program can list the applications it found in the system default directory and in the user default directory, delete them (only the user files), modify them (always saved in the user folder) and create new ones (in the user folder).
 
-Limitations: a few categories has been merged into other main categories (e.g. Audio and Video are simply links to AudioVideo category); the icons in the main program are taken from Hicolor icon theme, so it cannot match the real icon the user can see in its menu (tkinter cannot handle svg files; the xdg python module has some limitations).
+Limitations: a few categories has been merged into other main categories (e.g. Audio and Video are simply links to AudioVideo category); the icons in the main program are taken from Hicolor icon theme, so it cannot match the real icon the user can see in its menu (tkinter cannot handle svg files; the xdg python module has some limitations); could not save all the original content.
 
 ![My image](https://github.com/frank038/Menu-Editor/blob/master/img1.png)
 
