@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.7.7
+ V. 0.8.0
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -96,51 +96,49 @@ class Application(ttk.Frame):
         self.master.option_add('*Font', bigfont)
         # name
         self.lcr_name_lbl = ttk.Label(self, text="Name").grid(column=0, row=5, sticky="sw")
-        self.name_ent_var = tk.StringVar()
-        self.lcr_name_ent = ttk.Entry(self, textvariable=self.name_ent_var, width=50).grid(column=0, row=6, sticky="w")
+        self.lcr_name_ent = ttk.Entry(self, width=50)
+        self.lcr_name_ent.grid(column=0, row=6, sticky="w")
         # generic name
         self.lcr_genericname_lbl = ttk.Label(self, text="Generic Name (optional)").grid(column=0, row=7, sticky="sw")
-        self.genericname_ent_var = tk.StringVar()
-        self.lcr_genericname_ent = ttk.Entry(self, textvariable=self.genericname_ent_var, width=50).grid(column=0, row=8, sticky="w")
+        self.lcr_genericname_ent = ttk.Entry(self, width=50)
+        self.lcr_genericname_ent.grid(column=0, row=8, sticky="w")
         # executable
         self.lcr_exec_lbl = ttk.Label(self, text="Executable").grid(column=0, row=9, sticky="sw")
-        self.exec_ent_var = tk.StringVar()
-        self.lcr_exec_ent = ttk.Entry(self, textvariable=self.exec_ent_var, width=50).grid(column=0, row=10, sticky="w")
+        self.lcr_exec_ent = ttk.Entry(self, width=50)
+        self.lcr_exec_ent.grid(column=0, row=10, sticky="w")
         self.lcr_btn_exec = ttk.Button(self, text="Choose", command=self.fgetExec).grid(column=1, row=10, sticky="w")
         # tryexec
         self.lcr_tryexec_lbl = ttk.Label(self, text="TryExec (optional)").grid(column=0, row=11, sticky="sw")
-        self.tryexec_ent_var = tk.StringVar()
-        self.lcr_tryexec_ent = ttk.Entry(self, textvariable=self.tryexec_ent_var, width=50).grid(column=0, row=12, sticky="w")
+        self.lcr_tryexec_ent = ttk.Entry(self, width=50)
+        self.lcr_tryexec_ent.grid(column=0, row=12, sticky="w")
         self.lcr_btn_tryexec = ttk.Button(self, text="Choose", command=self.fgetTryExec).grid(column=1, row=12, sticky="w")
         # path
         self.lcr_dir_lbl = ttk.Label(self, text="Path (optional)").grid(column=0, row=13, sticky="sw")
-        self.dir_ent_var = tk.StringVar()
-        self.lcr_dir_ent = ttk.Entry(self, textvariable=self.dir_ent_var, width=50).grid(column=0, row=14, sticky="w")
+        self.lcr_dir_ent = ttk.Entry(self, width=50)
+        self.lcr_dir_ent.grid(column=0, row=14, sticky="w")
         self.lcr_btn_dir = ttk.Button(self, text="Choose", command=self.fgetDir).grid(column=1, row=14, sticky="w")
         # category
         self.lcr_category_lbl = ttk.Label(self, text="Category ")
         self.lcr_category_lbl.grid(column=0, row=15, sticky="sw")
-        self.category_var = tk.StringVar()
-        self.lcr_category_cb = ttk.Combobox(self, textvariable=self.category_var, values=freedesktop_main_categories, width=50)
+        self.lcr_category_cb = ttk.Combobox(self, values=freedesktop_main_categories, width=50)
         self.lcr_category_cb.grid(column=0, row=16, sticky="w")
-        self.lcr_category_cb.current(0)
         # mimetypes
         self.lcr_keys_lbl = ttk.Label(self, text="Mimetypes (optional - separate with a semicolon)").grid(column=0, row=17, sticky="sw")
-        self.mime_var = tk.StringVar()
-        self.lcr_keys_ent = ttk.Entry(self, textvariable=self.mime_var, width=50).grid(column=0, row=18, sticky="w")
+        self.lcr_keys_ent = ttk.Entry(self, width=50)
+        self.lcr_keys_ent.grid(column=0, row=18, sticky="w")
         # keywords
         self.lcr_keys_lbl = ttk.Label(self, text="Keywords (optional - separate with a semicolon)").grid(column=0, row=19, sticky="sw")
-        self.keys_var = tk.StringVar()
-        self.lcr_keys_ent = ttk.Entry(self, textvariable=self.keys_var, width=50).grid(column=0, row=20, sticky="w")
+        self.lcr_keys_ent2 = ttk.Entry(self, width=50)
+        self.lcr_keys_ent2.grid(column=0, row=20, sticky="w")
         # icon
         self.lcr_icon_lbl = ttk.Label(self, text="Icon").grid(column=0, row=21, sticky="sw")
-        self.icon_var = tk.StringVar()
-        self.lcr_icon_ent = ttk.Entry(self, textvariable=self.icon_var, width=50).grid(column=0, row=22, sticky="w")
+        self.lcr_icon_ent = ttk.Entry(self, width=50)
+        self.lcr_icon_ent.grid(column=0, row=22, sticky="w")
         self.lcr_btn_icon = ttk.Button(self, text="Choose", command=self.fgetIcon).grid(column=1, row=22, sticky="w")
         # comment
         self.lcr_comment_lbl = ttk.Label(self, text="Comment (optional)").grid(column=0, row=23, sticky="sw")
-        self.comment_var = tk.StringVar()
-        self.lcr_comment_ent = ttk.Entry(self, textvariable=self.comment_var, width=50).grid(column=0, row=24, sticky="w")
+        self.lcr_comment_ent = ttk.Entry(self, width=50)
+        self.lcr_comment_ent.grid(column=0, row=24, sticky="w")
         ### frame
         self.terminal_frame = ttk.Frame(self)
         self.terminal_frame.grid(column=0, row=25, columnspan=2, sticky="sw")
@@ -181,37 +179,39 @@ class Application(ttk.Frame):
         #
         # name
         dname = de.getName()
-        self.name_ent_var.set(dname)
+        self.lcr_name_ent.insert(0,dname)
         # generic name
         dgenericname = de.getGenericName()
-        self.genericname_ent_var.set(dgenericname)
+        self.lcr_genericname_ent.insert(0,dgenericname)
         # executable
         dexec = de.getExec()
-        self.exec_ent_var.set(dexec)
+        self.lcr_exec_ent.insert(0,dexec)
         # tryexec
         dtryexec = de.getTryExec()
-        self.tryexec_ent_var.set(dtryexec)
+        self.lcr_tryexec_ent.insert(0,dtryexec)
         # path
         dpath = de.getPath()
-        self.dir_ent_var.set(dpath)
+        self.lcr_dir_ent.insert(0,dpath)
         # category - main only
         dcategories_temp = de.getCategories()
         for ccat in dcategories_temp:
-            if ccat in freedesktop_main_categories:
-                self.category_var.set(ccat)
+             if ccat in freedesktop_main_categories:
+                cat_idx = freedesktop_main_categories.index(ccat)
+                self.lcr_category_cb.current(cat_idx)
+                # self.lcr_category_cb.insert(0,ccat)
                 break
         # mimetypes
         dmime = de.getMimeTypes()
-        self.mime_var.set(dmime)
+        self.lcr_keys_ent.insert(0,dmime)
         # keywords
         dkeywords = de.getKeywords()
-        self.keys_var.set(dkeywords)
+        self.lcr_keys_ent2.insert(0,dkeywords)
         # icon
         dicon = de.getIcon()
-        self.icon_var.set(dicon)
+        self.lcr_icon_ent.insert(0,dicon)
         # comment
         dcomment = de.getComment()
-        self.comment_var.set(dcomment)
+        self.lcr_comment_ent.insert(0,dcomment)
         # run in terminal
         dterminal = de.getTerminal()
         self.terminal_var.set(dterminal)
@@ -224,43 +224,44 @@ class Application(ttk.Frame):
     
     # save the file
     def fsave(self):
-        print("fsave")
         # getting all the stuff
         # name
-        dname = self.name_ent_var.get()
+        dname = self.lcr_name_ent.get()
         # if empty
         if dname == "":
             messagebox.showerror("No", "Error: \nThe name is mandatory.")
             return
         # generic name
-        dgenericname = self.genericname_ent_var.get()
+        dgenericname = self.lcr_genericname_ent.get()
         # executable
-        dexec = self.exec_ent_var.get()
+        dexec = self.lcr_exec_ent.get()
         # if empty
         if dexec == "":
             messagebox.showerror("No", "Error: \nThe executable is mandatory.")
             return
         # tryexec
-        dtryexec = self.tryexec_ent_var.get()
+        dtryexec = self.lcr_tryexec_ent.get()
         # path
-        dpath = self.dir_ent_var.get()
+        dpath = self.lcr_dir_ent.get()
         # category
-        dcategories = self.category_var.get()
+        dcategories = self.lcr_category_cb.get()
         dcategories += ';'
         # mimetypes
-        dmime = self.mime_var.get()
+        dmime = self.lcr_keys_ent.get()
         if dmime != "":
+            dmime = dmime.replace(" ", ";")
             if dmime[-1] != ';':
                 dmime += ';'
         # keywords
-        dkeywords = self.keys_var.get()
+        dkeywords = self.lcr_keys_ent2.get()
         if dkeywords != "":
-            if dkeywords[-1] != ';' and dkeywords != "":
+            dkeywords = dkeywords.replace(" ", ";")
+            if dkeywords[-1] != ';':
                 dkeywords += ';'
         # icon
-        dicon = self.icon_var.get()
+        dicon = self.lcr_icon_ent.get()
         # comment
-        dcomment = self.comment_var.get()
+        dcomment = self.lcr_comment_ent.get()
         # run in terminal
         dterminal_temp = self.terminal_var.get()
         if dterminal_temp == 0:
@@ -287,7 +288,6 @@ class Application(ttk.Frame):
             d = MyDialog(self.master)
             self.master.wait_window(d.top)
             if d.filename == "-1":
-                #print("ESCO")
                 return
             else:
                 pfilename = d.filename+".desktop"
@@ -299,21 +299,21 @@ class Application(ttk.Frame):
         # file name
         de.new(filename=pfilename)
         # setting the actions
-        de.set("Version", "1.0")
-        de.set("Type", "Application")
+        de.set("Version", "1.0", 'Desktop Entry')
+        de.set("Type", "Application", 'Desktop Entry')
         de.set("Name", dname)
-        de.set("GenericName", dgenericname)
-        de.set("Exec", dexec)
-        de.set("TryExec", dtryexec)
-        de.set("Path", dpath)
-        de.set("Categories", dcategories)
-        de.set("MimeType", dmime)
-        de.set("Keywords", dkeywords)
-        de.set("Icon", dicon)
-        de.set("Comment", dcomment)
-        de.set("Terminal", dterminal)
-        de.set("NoDisplay", dnodisplay)
-        de.set("Hidden", dhidden)
+        de.set("GenericName", dgenericname, 'Desktop Entry')
+        de.set("Exec", dexec, 'Desktop Entry')
+        de.set("TryExec", dtryexec, 'Desktop Entry')
+        de.set("Path", dpath, 'Desktop Entry')
+        de.set("Categories", dcategories, 'Desktop Entry')
+        de.set("MimeType", dmime, 'Desktop Entry')
+        de.set("Keywords", dkeywords, 'Desktop Entry')
+        de.set("Icon", dicon, 'Desktop Entry')
+        de.set("Comment", dcomment, 'Desktop Entry')
+        de.set("Terminal", dterminal, 'Desktop Entry')
+        de.set("NoDisplay", dnodisplay, 'Desktop Entry')
+        de.set("Hidden", dhidden, 'Desktop Entry')
         #
         # to user defaul directory
         try:
