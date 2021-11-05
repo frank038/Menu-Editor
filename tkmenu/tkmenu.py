@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.8.0
+ V. 0.8.1
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -112,16 +112,12 @@ class Application(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-        
         self.pack(fill="both", expand=True)
         self.master.update_idletasks()
-
         self.columnconfigure(1, weight=1) 
-        
         # treeview: row height
         ffont = font.Font(family='', size=font_size)
         self.tv_row_height = ffont.metrics("linespace")
-        
         self.create_widgets()
         
     def create_widgets(self):
@@ -141,10 +137,10 @@ class Application(ttk.Frame):
         #### buttons
         self.frame_btn = ttk.Frame(self, width=app_width)
         self.frame_btn.grid(column=0, row=0, columnspan=5, sticky="nwse")
-        
+        #
         for i in range(5):
             self.frame_btn.columnconfigure(i, weight=1)
-        
+        #
         # user/system switch
         self.btn1 = ttk.Button(self.frame_btn, text="User/System", command=self.fswitch)
         self.btn1.grid(column=0, row=0, sticky="we")
@@ -160,9 +156,6 @@ class Application(ttk.Frame):
         # quit button
         quit_btn = ttk.Button(self.frame_btn, text="Exit", command=quit)
         quit_btn.grid(column=4, row=0, sticky="we")
-        
-        
-        
         # frame for treeview e scrollbar
         self.tv_frame = ttk.Frame(self)
         self.tv_frame.grid(column=0, row=4, rowspan=20, sticky="nw")
@@ -293,7 +286,7 @@ class Application(ttk.Frame):
         # main categories
         for ccat in reversed(freedesktop_main_categories):
             id = self.tv.insert("", 0, text=ccat, tags=(ccat,"C"))
-            self.id_list.append(id) #([id,ccat])
+            self.id_list.append(id)
             self.id_list.append(ccat)
         #
         # fill treeview
@@ -313,13 +306,10 @@ class Application(ttk.Frame):
     
     # delete the desktop file if it is in the user dir
     def fdelete(self):
-        #
         selected_item = self.tv.focus()
         #
         if selected_item:
-            #
             ret = messagebox.askyesno("Question", "Delete this entry?")
-            #
             if ret:
                 item_path = self.tv.item(selected_item, "tags")[0]
                 # delete the selected item
@@ -359,12 +349,10 @@ class Application(ttk.Frame):
         list_two = []
         #
         for item in  self.info_desktop:
-            #print("item::", item.name)
-            #
             ret = 0
             # main category - first pass
             ret = self.item_in_main(item)
-            
+            #
             if ret:
                 # the id of the category
                 idx_cat = self.id_list.index(ret)
@@ -373,7 +361,7 @@ class Application(ttk.Frame):
             else:
                 # main category - second pass
                 ret = self.item_in_main2(item)
-                
+                #
                 if ret:
                     # the id of the category
                     idx_cat = self.id_list.index(ret)
@@ -393,10 +381,9 @@ class Application(ttk.Frame):
                         idx_cat = self.id_list.index("Missed")
                         idx = self.id_list[idx_cat-1]
                         list_two.append([item.name, item.path, idx, item.name.lower()])
-
         ## sort the lists and fill the treeview
         list_one2 = sorted(list_one, key=lambda list_one: list_one[3], reverse=True)
-
+        #
         for ii in list_one2:
             self.tv.insert(ii[2], 0, text=ii[0], tags=(ii[1],"E"))
         #
@@ -407,14 +394,11 @@ class Application(ttk.Frame):
         
     # from user to system and viceversa
     def fswitch(self):
-        #
         self.fempty_widgets()
-        #
         # empty the treeview
         for id in self.tv.get_children():
             for idd in self.tv.get_children(id):
                 self.tv.delete(idd)
-        #
         # setting the treeview heading
         if self.tv.heading("#0", option="text") == "User":
             self.tv.heading("#0", text="System")
@@ -431,7 +415,6 @@ class Application(ttk.Frame):
     def fpop(self, ap_dir):
         # the list of the desktop files
         self.file_list = self.list_app(ap_dir)
-        #
         # empty the list
         self.info_desktop = []
         # fill the lista
@@ -442,27 +425,22 @@ class Application(ttk.Frame):
         file_lista = []
         for ddir in llist:
             file_lista += glob.glob(ddir+"/*.desktop")
-        
         return file_lista
     
     # fill self.info_desktop
     def pop_info_desktop(self):
-        
         for ffile in self.file_list:
-            
             try:
                 entry = DesktopEntry.DesktopEntry(ffile)
                 fname = entry.getName()
                 fcategory = entry.getCategories()
                 ftype = entry.getType()
-
                 # both must exist
                 if ftype == "Application" and fcategory != "":
                     dentry = catDesktop()
                     dentry.name = fname
                     dentry.categories = fcategory
                     dentry.path = ffile
-                    
                     self.info_desktop.append(dentry)
             except Exception as E:
                 pass
@@ -471,7 +449,6 @@ class Application(ttk.Frame):
 
     # main category - first pass
     def item_in_main(self, item):
-        
         try:
             if item.categories[0] in freedesktop_main_categories:
                 return item.categories[0]
@@ -482,25 +459,21 @@ class Application(ttk.Frame):
     
     # main category - second pass
     def item_in_main2(self, item):
-        
         try:
             for iitem in item.categories:
                 if iitem in freedesktop_main_categories:
                     return iitem
-
             return 0
         except:
             return 0
     
     # extended category - third pass
     def item_in_ext(self, item):
-        
         try:
             for ccat in all_extend_list:
                 for iitem in item.categories:
                     if iitem in ccat.list:
                         return ccat.main
-            
             return 0
         except:
             return 0
@@ -509,7 +482,6 @@ class Application(ttk.Frame):
     
     # item in treeview selected
     def ftv(self, event):
-        #
         self.fempty_widgets()
         #
         item = self.tv.selection()[0]
@@ -528,7 +500,7 @@ class Application(ttk.Frame):
             img = entry.getIcon()
             # the path of the icona - only png of the hicolor theme
             img_path = IconTheme.getIconPath(img)
-            
+            #
             try:
                 if img_path:
                     self.iimage = tk.PhotoImage(file=img_path)
@@ -594,11 +566,10 @@ def main():
     root = tk.Tk()
     root.title("Menu editor")
     root.update_idletasks()
-    
     # style
     s = ttk.Style()
     s.theme_use("clam")
-    
+    #
     app = Application(master=root)
     app.mainloop()
     

@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.8.0
+ V. 0.8.1
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -43,21 +43,17 @@ freedesktop_main_categories = ["AudioVideo","Development",
 class MyDialog:
     
     def __init__(self, parent):
-        
         self.top = tk.Toplevel(parent)
         self.lbl = ttk.Label(self.top, text="Filename:")
         self.lbl.pack()
-        
         self.e_var = tk.StringVar()
         self.e = ttk.Entry(self.top, textvariable=self.e_var)
         self.e.pack(padx=5)
         # if a filename is passed as argument
         if dfilename != "":
             self.e_var.set(os.path.basename(dfilename).split('.')[0])
-
         b = ttk.Button(self.top, text="OK", command=self.ok)
         b.pack()
-        
         cancel = ttk.Button(self.top, text="Cancel", command=self.cancel)
         cancel.pack()
 
@@ -78,13 +74,10 @@ class Application(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-        
         self.pack(fill="both", expand=True, padx=10, pady=10)
         self.master.update_idletasks()
-        
         # treeview: row height
         ffont = font.Font(family='', size=font_size)
-        
         self.create_widgets()
         
     def create_widgets(self):
@@ -123,11 +116,11 @@ class Application(ttk.Frame):
         self.lcr_category_cb = ttk.Combobox(self, values=freedesktop_main_categories, width=50)
         self.lcr_category_cb.grid(column=0, row=16, sticky="w")
         # mimetypes
-        self.lcr_keys_lbl = ttk.Label(self, text="Mimetypes (optional - separate with a semicolon)").grid(column=0, row=17, sticky="sw")
+        self.lcr_keys_lbl = ttk.Label(self, text="Mimetypes (optional - separate with a space)").grid(column=0, row=17, sticky="sw")
         self.lcr_keys_ent = ttk.Entry(self, width=50)
         self.lcr_keys_ent.grid(column=0, row=18, sticky="w")
         # keywords
-        self.lcr_keys_lbl = ttk.Label(self, text="Keywords (optional - separate with a semicolon)").grid(column=0, row=19, sticky="sw")
+        self.lcr_keys_lbl = ttk.Label(self, text="Keywords (optional - separate with a space)").grid(column=0, row=19, sticky="sw")
         self.lcr_keys_ent2 = ttk.Entry(self, width=50)
         self.lcr_keys_ent2.grid(column=0, row=20, sticky="w")
         # icon
@@ -198,7 +191,6 @@ class Application(ttk.Frame):
              if ccat in freedesktop_main_categories:
                 cat_idx = freedesktop_main_categories.index(ccat)
                 self.lcr_category_cb.current(cat_idx)
-                # self.lcr_category_cb.insert(0,ccat)
                 break
         # mimetypes
         dmime = de.getMimeTypes()
