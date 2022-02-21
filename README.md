@@ -1,7 +1,7 @@
 # Menu-Editor
 by frank038
 
-v. 0.8.1
+v. 0.8.2
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY. Anyone can use and modified it for any purpose.
 
