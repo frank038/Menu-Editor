@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.8.1
+ V. 0.8.2
 """
 import tkinter as tk
 import tkinter.ttk as ttk

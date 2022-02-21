@@ -2,7 +2,7 @@
 
 """
  by frank38
- V. 0.8.1
+ V. 0.8.2
 """
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -326,17 +326,20 @@ class Application(ttk.Frame):
                            initialfile='tmp',
                            filetypes=[("All files", "*")],
                            font_size=font_size)
-        # if it is in path or not
-        if shutil.which(os.path.basename(filename)):
-            self.exec_ent_var.set(os.path.basename(filename))
-        else:
-            self.exec_ent_var.set(filename)
-            self.dir_ent_var.set(os.path.dirname(filename))
-        # #
-        # self.exec_ent_var.set(os.path.basename(filename))
-        # if os.path.dirname(filename):
-            # if os.path.dirname(filename) not in os.getenv("PATH").split(":"):
-                # self.dir_ent_var.set(os.path.dirname(filename))
+        if filename:
+            self.lcr_exec_ent.delete(0, 'end')
+            self.lcr_dir_ent.delete(0, 'end')
+            # if it is in path or not
+            if shutil.which(os.path.basename(filename)):
+                self.lcr_exec_ent.insert(0, os.path.basename(filename))
+            else:
+                self.lcr_exec_ent.insert(0, filename)
+                self.lcr_dir_ent.insert(0, os.path.dirname(filename))
+            # #
+            # self.exec_ent_var.set(os.path.basename(filename))
+            # if os.path.dirname(filename):
+                # if os.path.dirname(filename) not in os.getenv("PATH").split(":"):
+                    # self.dir_ent_var.set(os.path.dirname(filename))
     
     # get and set the executable chosen
     def fgetTryExec(self):
@@ -345,18 +348,22 @@ class Application(ttk.Frame):
                            initialfile='tmp',
                            filetypes=[("All files", "*")],
                            font_size=font_size)
-        # if it is in path or not
-        if shutil.which(os.path.basename(filename)):
-            self.tryexec_ent_var.set(os.path.basename(filename))
-        else:
-            self.tryexec_ent_var.set(filename)
+        if filename:
+            self.lcr_tryexec_ent.delete(0, 'end')
+            # if it is in path or not
+            if shutil.which(os.path.basename(filename)):
+                self.lcr_tryexec_ent.insert(0, os.path.basename(filename))
+            else:
+                self.lcr_tryexec_ent.insert(0, filename)
     
     # get the path
     def fgetDir(self):
         dirname = askopendirname(parent=self.master, 
                          initialdir='/', 
                          initialfile='tmp', font_size=font_size)
-        self.dir_ent_var.set(dirname)
+        if dirname:
+            self.lcr_dir_ent.delete(0, 'end')
+            self.lcr_dir_ent.insert(0, dirname)
     
     # get the icon
     def fgetIcon(self):
@@ -365,7 +372,9 @@ class Application(ttk.Frame):
                            initialfile='tmp',
                            filetypes=[("All files", "*")],
                            font_size=font_size)
-        self.icon_var.set(filename)
+        if filename:
+            self.lcr_icon_ent.delete(0, 'end')
+            self.lcr_icon_ent.insert(0, filename)
         
 ###########
 def main():
